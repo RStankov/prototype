@@ -356,7 +356,7 @@
         // Key needs to be a valid Element.Layout property.
         if (!props.include(key)) return;
         var value = this.get(key);
-        if (value != null) obj[key] = value;
+        if (value !== null) obj[key] = value;
       }, this);
       return obj;
     },
