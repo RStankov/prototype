@@ -349,13 +349,12 @@
      *  separated by spaces within a string.
     **/
     toObject: function() {
-      var args = $A(arguments);
-      var keys = (args.length === 0) ? Element.Layout.PROPERTIES :
-       args.join(' ').split(' ');
-      var obj = {};
+      var props = Element.Layout.PROPERTIES,
+          keys  = (arguments.length === 0) ? props : $A(arguments).join(' ').split(' '),
+          obj = {};
       keys.each( function(key) {
         // Key needs to be a valid Element.Layout property.
-        if (!Element.Layout.PROPERTIES.include(key)) return;
+        if (!props.include(key)) return;
         var value = this.get(key);
         if (value != null) obj[key] = value;
       }, this);
