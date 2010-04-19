@@ -350,15 +350,15 @@
     **/
     toObject: function() {
       var props = Element.Layout.PROPERTIES,
-          keys  = (arguments.length === 0) ? props : $A(arguments).join(' ').split(' '),
-          obj = {};
-      keys.each( function(key) {
+          keys  = (arguments.length === 0) ? props : $A(arguments).join(' ').split(' ');
+      
+      return keys.inject({}, function(obj, key) {
         // Key needs to be a valid Element.Layout property.
         if (!props.include(key)) return;
         var value = this.get(key);
         if (value !== null) obj[key] = value;
+        return obj;
       }, this);
-      return obj;
     },
     
     /**
