@@ -358,7 +358,7 @@
         if (!Element.Layout.PROPERTIES.include(key)) return;
         var value = this.get(key);
         if (value != null) obj[key] = value;
-      });
+      }, this);
       return obj;
     },
     

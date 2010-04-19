@@ -25,6 +25,7 @@ new Test.Unit.Runner({
       this.assertEqual(normalLayout.get(key), preComputedLayout.get(key), key);
     }, this);
   },
+  
   'test layout on absolutely-positioned elements': function() {
     var layout = $('box1').getLayout();
     
@@ -36,6 +37,32 @@ new Test.Unit.Runner({
     this.assertEqual(1020, layout.get('top'), 'top');
     
     this.assertEqual(25, layout.get('left'), 'left');  
+  },
+  
+  'test toObject method': function(){
+    var layout = $('box1').getLayout();
+    
+    // default behavior
+    var object      = layout.toObject(),
+        fullObject  = Element.Layout.PROPERTIES.inject({}, function(obj, key){
+      obj[key] = layout.get(key);
+      return obj;
+    });
+    
+    this.assertEnumEqual(Object.keys(object), Element.Layout.PROPERTIES);
+    this.assertEnumEqual(Object.values(object), Object.values(fullObject));
+    
+    // with given keys as string
+    object = layout.toObject('width height top left');
+    
+    this.assertEnumEqual(Object.keys(object), ['width', 'height', 'top', 'left']);
+    this.assertEnumEqual(Object.values(object), [242, 555, 1020, 25]);
+    
+    // with given keys as array of strings
+    object = layout.toObject('width height', 'top', 'left');
+
+    this.assertEnumEqual(Object.keys(object), ['width', 'height', 'top', 'left']);
+    this.assertEnumEqual(Object.values(object), [242, 555, 1020, 25]);
   },
   
   'test layout on elements with display: none and exact width': function() {
